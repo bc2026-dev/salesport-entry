@@ -8,13 +8,14 @@
 <meta property="og:description" content="20代の就職・転職をサポート。">
 <style>
 :root{font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP",sans-serif;color:#14273b;background:#f2f6fa;--primary:#215c83;--deep:#143a58;--border:#dbe5ee}*{box-sizing:border-box}body{margin:0}.shell{max-width:520px;margin:0 auto;min-height:100vh;background:white;box-shadow:0 4px 35px #23415a12}.hero-image{display:block;width:100%;height:auto;object-fit:contain}.top{padding:23px 25px 18px;background:linear-gradient(125deg,#143a58,#286a86);color:white}.logo{font-size:13px;font-weight:750;letter-spacing:.11em}.top h1{font-size:21px;line-height:1.45;margin:15px 0 6px}.top p{font-size:12px;opacity:.88;line-height:1.6;margin:0}.main{padding:25px 22px 38px}.progressLine{height:6px;background:#e7eef4;border-radius:9px;overflow:hidden;margin:10px 0 25px}.progressLine span{display:block;height:100%;background:#2c82ab;transition:width .2s}.meta{display:flex;justify-content:space-between;color:#6c7b8b;font-size:12px}.question{font-size:19px;line-height:1.55;letter-spacing:.01em;margin:0 0 9px}.hint{font-size:12px;color:#738294;margin-bottom:19px;line-height:1.7}.options{display:grid;gap:10px}.option{border:1.5px solid var(--border);background:#fff;border-radius:12px;padding:15px 16px;min-height:54px;text-align:left;color:#263b50;font-size:15px;font-weight:650;cursor:pointer;display:flex;justify-content:space-between;align-items:center}.option.selected{background:#edf7fb;border-color:#367ca4}.check{color:#2a759d}.actions{display:flex;gap:10px;margin-top:26px}.btn{border:0;background:var(--primary);color:#fff;border-radius:11px;padding:15px;font-size:15px;font-weight:700;cursor:pointer;flex:1}.btn:disabled{background:#b7c9d4;cursor:not-allowed}.back{border:1px solid var(--border);border-radius:11px;background:white;padding:15px 20px;color:#52667b;font-weight:650;cursor:pointer}.field{display:block;margin-top:15px}.field label{font-weight:700;font-size:13px;display:block;margin-bottom:8px}.field input,.field select{width:100%;border:1.5px solid var(--border);border-radius:11px;padding:15px;font-size:16px;background:white;color:#14273b;outline-color:#518cac}.field small{color:#64768a;display:block;margin-top:6px}.choice-mode{display:grid;gap:10px}.choice{border:1.5px solid var(--border);border-radius:13px;padding:16px;cursor:pointer;background:white}.choice.selected{border-color:#26739b;background:#f0f8fb}.choice strong{display:block;font-size:15px}.choice small{display:block;color:#677b8c;line-height:1.5;margin-top:4px}.schedule{margin-top:16px}.weekhead{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.weekhead strong{font-size:14px}.tiny{padding:7px 11px;background:#eef3f7;border:0;border-radius:8px;cursor:pointer}.days{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px}.day{border:1px solid var(--border);background:#fff;border-radius:9px;padding:10px 3px;text-align:center;cursor:pointer;font-size:12px}.day.active{border-color:#26739b;background:#e9f5fa;font-weight:750}.day b{display:block;margin-bottom:3px}.slots{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:15px}.slot{padding:11px 5px;background:#fff;border:1px solid var(--border);border-radius:9px;cursor:pointer}.slot.active{background:#e8f5fa;border-color:#26739b;font-weight:750}.muted{background:#f2f6f8;border-radius:10px;padding:12px;color:#647789;font-size:12px;line-height:1.65;margin-top:18px}.end{padding:12px 0;text-align:center}.end .circle{width:72px;height:72px;background:#e5f7ed;border-radius:50%;display:grid;place-items:center;color:#198251;font-size:35px;margin:12px auto 20px}.end h2{font-size:21px}.summary{background:#f3f7fa;border-radius:12px;text-align:left;padding:17px;line-height:1.9;font-size:14px;margin-top:19px}.disclaimer{font-size:11px;color:#8090a0;line-height:1.7;margin-top:20px}.error{color:#c03b35;font-size:12px;margin-top:9px}.foot{text-align:center;padding:18px;font-size:11px;color:#8493a1;border-top:1px solid #edf1f5}.foot a{color:#527491;text-decoration:underline}.consent{display:flex;align-items:flex-start;gap:9px;font-size:12px;line-height:1.7;margin-top:17px;color:#43586b}.consent input{margin-top:4px;accent-color:var(--primary)}.consent a{color:#1769e0}.btn:disabled{opacity:.6}
+.slot:disabled{opacity:.35;cursor:not-allowed;background:#f0f2f4}.field a{color:var(--primary)}
 </style>
 </head>
-<body><div class="shell"><img class="hero-image" src="salesport-fv.png" alt="SalesPort｜20代のキャリアへ、新しい行き先を。" onerror="this.style.display='none'" /><main class="main"><div id="app"></div></main><footer class="foot"><a href="privacy.html" target="_blank" rel="noopener">個人情報等の取扱い</a><br>© Bitters Club株式会社</footer></div>
+<body><div class="shell"><img class="hero-image" src="salesport-fv.png" alt="SalesPort｜20代のキャリアへ、新しい行き先を。" onerror="this.style.display='none'" /><main class="main"><div id="app"></div></main><footer class="foot"><a href="https://bc2026-dev.github.io/salesport/privacy.html" target="_blank" rel="noopener">個人情報等の取扱い</a><br>© Bitters Club株式会社</footer></div>
 <script>
 (()=>{
 // GAS予約APIの公開URLを設定してから受付を開始してください。
-const BOOKING_API_URL = '';
+const BOOKING_API_URL = 'https://script.google.com/macros/s/AKfycbwAF5hZ4lt2aF6ce9cIkZWqqWVsWlWRdC2CU2HbSBq2UPMs5H9UZFCgbxhpFj5vqVEgww/exec';
 const qs=[
 {title:'いつごろから働きたいですか？',options:['できるだけ早く','まだ決まっていない']},
 {title:'希望の働き方は？',options:['正社員','契約社員','アルバイト・パート','まだ決まっていない']},
@@ -22,42 +23,115 @@ const qs=[
 {title:'次の仕事で重視したいことは？',options:['収入・待遇','休日・働き方','仕事内容','将来性','まだ決まっていない']},
 {title:'年齢を教えてください',options:Array.from({length:43},(_,i)=>`${i+18}歳`)}
 ];
-let step=0,values={},name='',phone='',mode='weekday',date='',time='',error='',finished=false,submitting=false,consented=false;
-const app=document.getElementById('app');const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let step=0,values={},name='',phone='',mode='weekday',date='',time='',band='',error='',finished=false,submitting=false,consented=false;
+let takenSlots=new Set(),availabilityLoading=false,availabilityLoaded=false,requestId='', formStarted=false, eventStepSet=new Set();
+const app=document.getElementById('app');
+const params = new URLSearchParams(location.search);
+const getParam=k=>params.get(k)||'';
+const allowedSlots=Array.from({length:18},(_,i)=>`${String(10+Math.floor(i/2)).padStart(2,'0')}:${i%2?'30':'00'}`).filter(t=>t<'19:00');
+const bands=[{label:'10:00〜12:00',start:'10:00',end:'12:00'},{label:'12:00〜14:00',start:'12:00',end:'14:00'},{label:'14:00〜16:00',start:'14:00',end:'16:00'},{label:'16:00〜19:00',start:'16:00',end:'19:00'}];const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const dateObj=(n)=>{const d=new Date();d.setHours(12,0,0,0);d.setDate(d.getDate()+n);return d};
 const fmt=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
 function weekdays(){const arr=[];for(let i=0;i<=7;i++){const d=dateObj(i);if(d.getDay()>0&&d.getDay()<6)arr.push(d)}return arr}
-function calendar(){const days=weekdays();if(!days.some(d=>fmt(d)===date)){date=days.length?fmt(days[0]):'';time=''}return `<div class="schedule"><div class="weekhead"><strong>平日の日程（本日から7日先まで）</strong></div><div class="days">${days.map(d=>`<button type="button" class="day ${fmt(d)===date?'active':''}" data-date="${fmt(d)}"><b>${d.getMonth()+1}/${d.getDate()}</b>${'日月火水木金土'[d.getDay()]}</button>`).join('')}</div><div class="slots">${['10:00','11:00','13:00','14:00','15:00','16:00','17:00','18:00'].map(t=>`<button type="button" class="slot ${time===t?'active':''}" data-time="${t}">${t}</button>`).join('')}</div></div>`}
+function calendar(){
+  if(!availabilityLoaded)return '<div class="muted">空き枠を確認しています…</div>';
+  const selectBand=`<div class="choice-mode"><p class="hint" style="margin:0">まず希望する時間帯を選択してください</p>${bands.map(b=>`<button type="button" class="choice ${band===b.label?'selected':''}" data-band="${b.label}"><strong>${b.label}</strong></button>`).join('')}</div>`;
+  if(!band)return selectBand;
+  const range=bands.find(b=>b.label===band);
+  const valid=allowedSlots.filter(t=>t>=range.start&&t<range.end);
+  const days=weekdays().filter(d=>valid.some(t=>!takenSlots.has(fmt(d)+' '+t)));
+  if(!days.length)return selectBand+'<div class="muted">この時間帯は現在空きがありません。別の時間帯をお選びください。</div>';
+  if(!days.some(d=>fmt(d)===date)){date='';time='';}
+  const dates=`<div class="schedule"><div class="weekhead"><strong>空きがある日程（本日から7日先まで）</strong></div><div class="days">${days.map(d=>`<button type="button" class="day ${fmt(d)===date?'active':''}" data-date="${fmt(d)}"><b>${d.getMonth()+1}/${d.getDate()}</b>${'日月火水木金土'[d.getDay()]}</button>`).join('')}</div></div>`;
+  const times=date?`<div class="slots">${valid.filter(t=>!takenSlots.has(date+' '+t)).map(t=>`<button type="button" class="slot ${time===t?'active':''}" data-time="${t}">${t}</button>`).join('')}</div>`:'';
+  return selectBand+dates+times;
+}
+function track(name,extra={}){
+  // 計測通信の失敗は予約操作を妨げない
+  if(!BOOKING_API_URL)return;
+  const body={kind:'event',event:name,sessionId:getSessionId(),pageUrl:location.href,utm_source:getParam('utm_source'),utm_medium:getParam('utm_medium'),utm_campaign:getParam('utm_campaign'),utm_content:getParam('utm_content'),utm_term:getParam('utm_term'),fbclid:getParam('fbclid'),at:new Date().toISOString(),...extra};
+  try{fetch(BOOKING_API_URL,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(body),keepalive:true}).catch(()=>{});}catch(e){}
+}
+function getSessionId(){
+  try{let k='salesport_entry_session',s=sessionStorage.getItem(k);if(!s){s=crypto.randomUUID?.()||'ss-'+Date.now()+'-'+Math.random();sessionStorage.setItem(k,s)}return s}catch(e){return 'ss-'+Date.now()}
+}
+function fetchAvailability(){
+  if(!BOOKING_API_URL||availabilityLoading)return;
+  availabilityLoading=true;
+  const key='__spSlots'+Date.now()+Math.floor(Math.random()*1e5);
+  const script=document.createElement('script');
+  const clean=()=>{clearTimeout(timer);delete window[key];script.remove();availabilityLoading=false;};
+  window[key]=response=>{if(response?.ok){takenSlots=new Set(response.taken||[]);availabilityLoaded=true;error='';}else{error='空き枠の取得に失敗しました。';}clean();if(step===6&&mode==='weekday')view();};
+  const timer=setTimeout(()=>{clean();if(step===6){error='空き枠の取得に失敗しました。画面を再読み込みしてください。';view();}},12000);
+  script.onerror=()=>{clean();if(step===6){error='空き枠の取得に失敗しました。画面を再読み込みしてください。';view();}};
+  script.src=BOOKING_API_URL+'?action=slots&callback='+encodeURIComponent(key)+'&t='+Date.now();
+  document.head.appendChild(script);
+}
+function submitBooking(payload){
+  return new Promise((resolve,reject)=>{
+    const nonce=payload.requestId;
+    const frame=document.createElement('iframe');
+    frame.name='spBookingFrame_'+nonce.replace(/[^\w-]/g,'');
+    frame.style.display='none';
+    const form=document.createElement('form');form.method='POST';form.action=BOOKING_API_URL;form.target=frame.name;form.style.display='none';
+    const input=document.createElement('input');input.type='hidden';input.name='payload';input.value=JSON.stringify(payload);form.appendChild(input);
+    const timer=setTimeout(()=>finish(new Error('timeout')),25000);
+    let complete=false;
+    function finish(err,result){if(complete)return;complete=true;clearTimeout(timer);window.removeEventListener('message',onMessage);setTimeout(()=>{frame.remove();form.remove()},100);if(err)reject(err);else resolve(result);}
+    function onMessage(event){
+      // HTML Serviceはscript.googleusercontent.com等から返る
+      // GAS HtmlServiceのサンドボックスは入れ子iframeを使う場合がある。
+      // requestIdとGoogle配信元を両方確認する。
+      if(event.source!==frame.contentWindow)return;
+      if(event.origin!=='null'&&!/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|google\.com)$/.test(event.origin))return;
+      const v=event.data;
+      if(v?.channel!=='salesport_booking' || v?.requestId!==nonce)return;
+      if(v.ok===true)finish(null,v);
+      else finish(new Error(v.message||'受付エラー'));
+    }
+    window.addEventListener('message',onMessage);
+    document.body.appendChild(frame);document.body.appendChild(form);
+    form.submit();
+  });
+}
+track('lp_view');
 function view(){if(finished){app.innerHTML=`<div class="end"><div class="circle">✓</div><h2>お申し込みを受け付けました</h2><p>${mode==='weekday'?'電話相談の受付が完了しました。':'ご希望を受け付けました。担当者から日時をご案内いたします。'}</p><div class="summary"><b>お名前：</b>${esc(name)}<br><b>電話番号：</b>${esc(phone)}<br><b>電話相談：</b>${mode==='weekday'?`${esc(date)} ${esc(time)}`:'19時以降または土日で相談（日時は別途ご案内）'}</div><p class="disclaimer">ご入力いただいた電話番号へご連絡いたします。</p></div>`;return}
 const titles=[...qs.map(q=>q.title),'お名前と電話番号を教えてください','電話相談のお日にちを選んでください'];let body='';
 if(step<5){let q=qs[step];body=step===4?`<div class="field"><label for="age">年齢</label><select id="age"><option value="">選択してください</option>${q.options.map(x=>`<option value="${x}" ${values[step]===x?'selected':''}>${x}</option>`).join('')}</select></div>`:`<div class="options">${q.options.map((x,i)=>`<button class="option ${values[step]===x?'selected':''}" data-option="${i}">${esc(x)}<span class="check">${values[step]===x?'✓':'›'}</span></button>`).join('')}</div>`}
 else if(step===5){body=`<div class="field"><label for="person">お名前</label><input id="person" autocomplete="name" placeholder="例：山田 太郎" value="${esc(name)}" /></div><div class="field"><label for="phone">電話番号</label><input id="phone" inputmode="tel" type="tel" autocomplete="tel" placeholder="例：09012345678" value="${esc(phone)}"/><small>担当者から電話相談の日時にお電話します。</small></div>`}
-else {body=`${mode==='weekday'?calendar():''}<div class="choice-mode" style="margin-top:18px"><button type="button" class="choice ${mode==='flex'?'selected':''}" data-mode="flex"><strong>19時以降または土日で相談</strong><small>希望を受け付け、日時は別途ご案内します</small></button>${mode==='flex'?'<button type="button" class="choice" data-mode="weekday"><strong>平日の空き枠から選ぶ</strong></button>':''}</div>${mode==='flex'?'<div class="muted">19時以降または土日の相談は、希望を受け付けた後に日時をご案内します。</div>':''}`}
-app.innerHTML=`<div class="meta"><span>かんたん入力</span><span>STEP ${step+1} / 7</span></div><div class="progressLine"><span style="width:${(step+1)/7*100}%"></span></div><h2 class="question">${titles[step]}</h2><div class="hint">${step<5?'選択するだけで回答できます。':step===5?'ご相談に必要な連絡先を入力してください。':'ご予約のお時間に担当者からお電話いたします。所要時間は10分程度となります。'}</div>${body}${step===6?`<label class="consent"><input type="checkbox" id="consent" ${consented?'checked':''}><span><a href="privacy.html" target="_blank" rel="noopener">個人情報等の取扱い</a>を確認し、電話相談のために情報を送信することに同意します。</span></label>`:''}${error?`<p class="error">${esc(error)}</p>`:''}<div class="actions">${step>0?'<button class="back" data-act="back">戻る</button>':''}<button class="btn" data-act="next">${step===6?(submitting?'送信中…':'この内容で申し込む'):'次へ'}</button></div>`;bind()}
+else {body=`${mode==='weekday'?(availabilityLoaded?calendar():'<div class="muted">空き枠を確認しています…</div>'):''}<div class="choice-mode" style="margin-top:18px"><button type="button" class="choice ${mode==='flex'?'selected':''}" data-mode="flex"><strong>19時以降または土日で相談</strong><small>希望を受け付け、日時は別途ご案内します</small></button>${mode==='flex'?'<button type="button" class="choice" data-mode="weekday"><strong>平日の空き枠から選ぶ</strong></button>':''}</div>${mode==='flex'?'<div class="muted">19時以降または土日の相談は、希望を受け付けた後に日時をご案内します。</div>':''}`}
+app.innerHTML=`<div class="meta"><span>かんたん入力</span><span>STEP ${step+1} / 7</span></div><div class="progressLine"><span style="width:${(step+1)/7*100}%"></span></div><h2 class="question">${titles[step]}</h2><div class="hint">${step<5?'選択するだけで回答できます。':step===5?'ご相談に必要な連絡先を入力してください。':'ご予約のお時間に担当者からお電話いたします。所要時間は10分程度となります。'}</div>${body}${step===6?`<label class="consent"><input type="checkbox" id="consent" ${consented?'checked':''}><span><a href="https://bc2026-dev.github.io/salesport/privacy.html" target="_blank" rel="noopener">個人情報等の取扱い</a>を確認し、電話相談のために情報を送信することに同意します。</span></label>`:''}${error?`<p class="error">${esc(error)}</p>`:''}<div class="actions">${step>0?'<button class="back" data-act="back">戻る</button>':''}<button class="btn" data-act="next">${step===6?(submitting?'送信中…':'この内容で申し込む'):'次へ'}</button></div>`;bind()}
 async function next(){
   if(submitting)return;
   error='';
   if(step<5){if(!values[step])error='回答を選択してください。'}
   else if(step===5){name=document.querySelector('#person')?.value.trim()||'';phone=document.querySelector('#phone')?.value.replace(/[^0-9]/g,'')||'';if(!name||!/^0\d{9,10}$/.test(phone))error='お名前と正しい電話番号を入力してください。'}
   else {consented=!!document.querySelector('#consent')?.checked;
-    if(mode==='weekday'&&(!date||!time))error='日付と時間を選択してください。';
+    if(mode==='weekday'&&(!band||!date||!time))error='時間帯・日付・時刻を選択してください。';
+    if(mode==='weekday'&&(!availabilityLoaded||takenSlots.has(date+' '+time))&&!error)error='空き枠を再度確認してください。';
     if(!consented&&!error)error='個人情報等の取扱いへの同意が必要です。';
   }
   if(error){view();return;}
-  if(step!==6){step++;view();return;}
-  if(!BOOKING_API_URL){error='現在、予約受付の準備中です。';view();return;}
+  if(step!==6){if(step===5)track('contact_completed'); step++; if(step===6){band='';date='';time='';availabilityLoaded=false;fetchAvailability();}view();return;}
+  if(!BOOKING_API_URL){error='受付システムに接続できません。';view();return;}
   submitting=true;view();
-  const data={service:'SalesPort',answers:qs.map((q,i)=>({question:q.title,answer:values[i]||''})),name,phone,bookingType:mode,bookingDate:mode==='weekday'?date:'',bookingTime:mode==='weekday'?time:'',consent:true,submittedAt:new Date().toISOString(),source:{utm_source:new URLSearchParams(location.search).get('utm_source')||'',utm_campaign:new URLSearchParams(location.search).get('utm_campaign')||''}};
+  requestId=requestId||(crypto.randomUUID?.()||('req-'+Date.now()+'-'+Math.random().toString(36).slice(2)));
+  const data={kind:'booking',requestId,service:'SalesPort',answers:qs.map((q,i)=>({question:q.title,answer:values[i]||''})),name,phone,bookingType:mode,bookingDate:mode==='weekday'?date:'',bookingTime:mode==='weekday'?time:'',consent:true,submittedAt:new Date().toISOString(),source:{sessionId:getSessionId(),pageUrl:location.href,utm_source:getParam('utm_source'),utm_medium:getParam('utm_medium'),utm_campaign:getParam('utm_campaign'),utm_content:getParam('utm_content'),utm_term:getParam('utm_term'),fbclid:getParam('fbclid'),ad_id:getParam('ad_id'),adset_id:getParam('adset_id')}};
   try{
-    const response=await fetch(BOOKING_API_URL,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(data)});
-    if(!response.ok)throw new Error('HTTP '+response.status);
-    const result=await response.json();
-    if(result.ok!==true)throw new Error(result.message||'予約の受付を確認できませんでした。');
+    const result=await submitBooking(data);
+    if(result.ok!==true)throw new Error(result.message||'予約失敗');
     finished=true;
-  }catch(err){error='送信を完了できませんでした。時間をおいて再度お試しください。';console.error('SalesPort booking error',err);}
+    track('booking_complete',{bookingType:mode});
+  }catch(err){
+    const msg=String(err.message||'');
+    if(msg.includes('SLOT_TAKEN')){error='選択した日時は予約済みです。別の時間を選んでください。';availabilityLoaded=false;fetchAvailability();requestId='';}
+    else if(msg.includes('INVALID_SLOT')){error='日程の有効期限が過ぎました。別の時間を選んでください。';availabilityLoaded=false;fetchAvailability();requestId='';}
+    else {error='受付の確認ができませんでした。続けて再送信すると重複する可能性があります。確認のうえ、再度お試しください。';}
+    console.error('SalesPort booking error',err);
+  }
   submitting=false;view();
 }
-function bind(){app.querySelectorAll('[data-option]').forEach(el=>el.addEventListener('click',()=>{values[step]=qs[step].options[Number(el.dataset.option)];error='';step++;view()}));app.querySelector('#consent')?.addEventListener('change',e=>{consented=e.target.checked});app.querySelector('#age')?.addEventListener('change',e=>{values[4]=e.target.value});app.querySelectorAll('[data-mode]').forEach(el=>el.addEventListener('click',()=>{mode=el.dataset.mode;error='';view()}));app.querySelectorAll('[data-date]').forEach(el=>el.addEventListener('click',()=>{date=el.dataset.date;time='';view()}));app.querySelectorAll('[data-time]').forEach(el=>el.addEventListener('click',()=>{time=el.dataset.time;view()}));app.querySelectorAll('[data-act]').forEach(el=>el.addEventListener('click',()=>{let a=el.dataset.act;if(a==='next')next();if(a==='back'){if(step===5){name=document.querySelector('#person')?.value||name;phone=document.querySelector('#phone')?.value||phone}step=Math.max(0,step-1);error='';view()}if(a==='restart'){step=0;values={};name='';phone='';mode='weekday';date='';time='';finished=false;view()}}))}
+function bind(){app.querySelectorAll('[data-option]').forEach(el=>el.addEventListener('click',()=>{values[step]=qs[step].options[Number(el.dataset.option)]; if(!formStarted){formStarted=true;track('form_start')} if(!eventStepSet.has(step)){track('question_answer',{step:step+1});eventStepSet.add(step)} error='';step++;view()}));app.querySelector('#consent')?.addEventListener('change',e=>{consented=e.target.checked});app.querySelector('#age')?.addEventListener('change',e=>{values[4]=e.target.value;if(e.target.value&&!eventStepSet.has(4)){track('question_answer',{step:5});eventStepSet.add(4)}});app.querySelectorAll('[data-mode]').forEach(el=>el.addEventListener('click',()=>{mode=el.dataset.mode;error='';view()}));app.querySelectorAll('[data-band]').forEach(el=>el.addEventListener('click',()=>{band=el.dataset.band;date='';time='';error='';view()}));app.querySelectorAll('[data-date]').forEach(el=>el.addEventListener('click',()=>{date=el.dataset.date;time='';view()}));app.querySelectorAll('[data-time]').forEach(el=>el.addEventListener('click',()=>{time=el.dataset.time;view()}));app.querySelectorAll('[data-act]').forEach(el=>el.addEventListener('click',()=>{let a=el.dataset.act;if(a==='next')next();if(a==='back'){if(step===5){name=document.querySelector('#person')?.value||name;phone=document.querySelector('#phone')?.value||phone}step=Math.max(0,step-1);error='';view()}if(a==='restart'){step=0;values={};name='';phone='';mode='weekday';date='';time='';finished=false;view()}}))}
 // delegate week navigation separately to avoid primary "next" button collision
 view();
 })();
