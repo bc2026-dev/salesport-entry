@@ -75,14 +75,14 @@ function submitBooking(payload){
     frame.style.display='none';
     const form=document.createElement('form');form.method='POST';form.action=BOOKING_API_URL;form.target=frame.name;form.style.display='none';
     const input=document.createElement('input');input.type='hidden';input.name='payload';input.value=JSON.stringify(payload);form.appendChild(input);
-    const timer=setTimeout(()=>finish(new Error('timeout')),25000);
+    const timer=setTimeout(()=>finish(new Error('timeout')),40000);
     let complete=false;
     function finish(err,result){if(complete)return;complete=true;clearTimeout(timer);window.removeEventListener('message',onMessage);setTimeout(()=>{frame.remove();form.remove()},100);if(err)reject(err);else resolve(result);}
     function onMessage(event){
       // HTML Serviceはscript.googleusercontent.com等から返る
       // GAS HtmlServiceのサンドボックスは入れ子iframeを使う場合がある。
       // requestIdとGoogle配信元を両方確認する。
-      if(event.source!==frame.contentWindow)return;
+      // GAS HtmlService can deliver the response from a nested Google frame; compare nonce and trusted origin instead of frame identity.
       if(event.origin!=='null'&&!/^https:\/\/([a-z0-9-]+\.)*(googleusercontent\.com|google\.com)$/.test(event.origin))return;
       const v=event.data;
       if(v?.channel!=='salesport_booking' || v?.requestId!==nonce)return;
