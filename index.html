@@ -12,7 +12,7 @@
 .meta-right{display:flex;align-items:center;gap:12px}.top-return{border:0;padding:2px 0;background:transparent;color:#215c83;font-size:12px;font-weight:700;text-decoration:underline;text-underline-offset:3px;cursor:pointer}.top-return:hover{color:#143a58}@media(max-width:350px){.meta-right{gap:7px}.top-return{font-size:11px}}
 </style>
 </head>
-<body><div class="shell"><img class="hero-image" src="salesport-fv.png" alt="SalesPort｜20代のキャリアへ、新しい行き先を。" onerror="this.style.display='none'" /><main class="main"><div id="app"></div></main><footer class="foot"><a href="https://bc2026-dev.github.io/salesport/privacy.html" target="_blank" rel="noopener">個人情報等の取扱い</a><br>© Bitters Club株式会社</footer></div>
+<body><div class="shell"><img class="hero-image" src="salesport-fv.png" alt="SalesPort｜20代のキャリアへ、新しい行き先を。" onerror="this.style.display='none'" /><main class="main"><div id="app"></div></main><footer class="foot"><a href="privacy.html" target="_blank" rel="noopener">個人情報等の取扱い</a><br>© Bitters Club株式会社</footer></div>
 <script>
 (()=>{
 // GAS予約APIの公開URLを設定してから受付を開始してください。
@@ -71,11 +71,12 @@ function getSessionId(){
 }
 function fetchAvailability(){
   if(!BOOKING_API_URL||availabilityLoading)return;
+  const startedAt=performance.now();
   availabilityLoading=true;
   const key='__spSlots'+Date.now()+Math.floor(Math.random()*1e5);
   const script=document.createElement('script');
   const clean=()=>{clearTimeout(timer);delete window[key];script.remove();availabilityLoading=false;};
-  window[key]=response=>{if(response?.ok){takenSlots=new Set(response.taken||[]);availabilityLoaded=true;error='';}else{error='空き枠の取得に失敗しました（'+String(response?.reason||'サーバー応答エラー')+'）。';}clean();if(step===6&&mode==='weekday')view();};
+  window[key]=response=>{if(response?.ok){console.info('[SalesPort] 空き枠取得:',Math.round(performance.now()-startedAt)+'ms','GAS処理:',response.serverMs+'ms','キャッシュ:',!!response.cached);takenSlots=new Set(response.taken||[]);availabilityLoaded=true;error='';}else{error='空き枠の取得に失敗しました（'+String(response?.reason||'サーバー応答エラー')+'）。';}clean();if(step===6&&mode==='weekday')view();};
   const timer=setTimeout(()=>{clean();if(step===6){error='空き枠の取得に失敗しました（応答なし）。';view();}},12000);
   script.onerror=()=>{clean();if(step===6){error='空き枠の取得に失敗しました（応答なし）。';view();}};
   script.src=BOOKING_API_URL+'?action=slots&callback='+encodeURIComponent(key)+'&t='+Date.now();
@@ -110,24 +111,24 @@ function submitBooking(payload){
 }
 window.addEventListener('pagehide',()=>{if(step===5){name=document.querySelector('#person')?.value||name;phone=document.querySelector('#phone')?.value||phone;}remember();});
 track('lp_view');
-function view(){remember();if(finished){app.innerHTML=`<div class="end"><div class="circle">✓</div><h2>お申し込みを受け付けました</h2><p>${mode==='weekday'?'電話相談の受付が完了しました。':'ご希望を受け付けました。担当者から日時をご案内いたします。'}</p><div class="summary"><b>お名前：</b>${esc(name)}<br><b>電話番号：</b>${esc(phone)}<br><b>電話相談：</b>${mode==='weekday'?`${esc(date)} ${esc(time)}`:'19時以降または土日で相談（日時は別途ご案内）'}</div><p class="disclaimer">ご入力いただいた電話番号宛に、担当者からショートメール（SMS）をお送りします。</p></div>`;return}
+function view(){remember();if(finished){app.innerHTML=`<div class="end"><div class="circle">✓</div><h2>お申し込みありがとうございます</h2><p>${mode==='weekday'?'電話相談のご予約が正常に完了しました。':'電話相談のお申し込みを正常に受け付けました。日時は別途ご案内いたします。'}<br>当日は10分程度、お時間を頂戴いたします。</p><div class="summary"><b>お名前：</b>${esc(name)}<br><b>電話番号：</b>${esc(phone)}<br><b>電話相談：</b>${mode==='weekday'?`${esc(date)} ${esc(time)}`:'19時以降または土日で相談（日時は別途ご案内）'}</div><p class="disclaimer">ご入力いただいた電話番号宛に、担当者からショートメール（SMS）をお送りします。</p></div>`;return}
 const titles=[...qs.map(q=>q.title),'お名前と電話番号を教えてください','電話相談のお日にちを選んでください'];let body='';
 if(step<5){let q=qs[step];body=step===4?`<div class="field"><label for="age">年齢</label><select id="age"><option value="">選択してください</option>${q.options.map(x=>`<option value="${x}" ${values[step]===x?'selected':''}>${x}</option>`).join('')}</select></div>`:`<div class="options">${q.options.map((x,i)=>`<button class="option ${values[step]===x?'selected':''}" data-option="${i}">${esc(x)}<span class="check">${values[step]===x?'✓':'›'}</span></button>`).join('')}</div>`}
 else if(step===5){body=`<div class="field"><label for="person">お名前</label><input id="person" autocomplete="name" placeholder="例：山田 太郎" value="${esc(name)}" /></div><div class="field"><label for="phone">電話番号</label><input id="phone" inputmode="tel" type="tel" autocomplete="tel" placeholder="例：09012345678" value="${esc(phone)}"/><small>担当者から電話相談の日時にお電話します。</small></div>`}
 else {body=`${mode==='weekday'?(availabilityLoaded?calendar():'<div class="muted">空き枠を確認しています…</div>'):''}<div class="choice-mode" style="margin-top:18px"><button type="button" class="choice ${mode==='flex'?'selected':''}" data-mode="flex"><strong>19時以降または土日で相談</strong><small>希望を受け付け、日時は別途ご案内します</small></button>${mode==='flex'?'<button type="button" class="choice" data-mode="weekday"><strong>平日の空き枠から選ぶ</strong></button>':''}</div>${mode==='flex'?'<div class="muted">19時以降または土日の相談は、希望を受け付けた後に日時をご案内します。</div>':''}`}
-app.innerHTML=`<div class="meta"><span>かんたん入力</span><span class="meta-right"><button type="button" class="top-return" data-act="top">↩ TOPに戻る</button><span>STEP ${step+1} / 7</span></span></div><div class="progressLine"><span style="width:${(step+1)/7*100}%"></span></div><h2 class="question">${titles[step]}</h2><div class="hint">${step<5?'選択するだけで回答できます。':step===5?'ご相談に必要な連絡先を入力してください。':'ご予約のお時間に担当者からお電話いたします。所要時間は10分程度となります。'}</div>${body}${step===6?`<label class="consent"><input type="checkbox" id="consent" ${consented?'checked':''}><span><a href="https://bc2026-dev.github.io/salesport/privacy.html" target="_blank" rel="noopener">個人情報等の取扱い</a>を確認し、電話相談のために情報を送信することに同意します。</span></label>`:''}${error?`<p class="error">${esc(error)}</p>${step===6&&mode==='weekday'?'<button class="back" type="button" data-act="retrySlots">空き枠を再取得</button>':''}`:''}<div class="actions">${step>0?'<button class="back" data-act="back">戻る</button>':''}<button class="btn" data-act="next">${step===6?(submitting?'送信中…':'この内容で申し込む'):'次へ'}</button></div>`;bind()}
+app.innerHTML=`<div class="meta"><span>かんたん入力</span><span class="meta-right"><button type="button" class="top-return" data-act="top">↩ TOPに戻る</button><span>STEP ${step+1} / 7</span></span></div><div class="progressLine"><span style="width:${(step+1)/7*100}%"></span></div><h2 class="question">${titles[step]}</h2><div class="hint">${step<5?'選択するだけで回答できます。':step===5?'ご相談に必要な連絡先を入力してください。':'ご予約のお時間に担当者からお電話いたします。所要時間は10分程度となります。'}</div>${body}${step===6?`<label class="consent"><input type="checkbox" id="consent" ${consented?'checked':''}><span><a href="privacy.html" target="_blank" rel="noopener">個人情報等の取扱い</a>を確認し、電話相談のために情報を送信することに同意します。</span></label>`:''}${error?`<p class="error">${esc(error)}</p>${step===6&&mode==='weekday'?'<button class="back" type="button" data-act="retrySlots">空き枠を再取得</button>':''}`:''}<div class="actions">${step>0?'<button class="back" data-act="back">戻る</button>':''}<button class="btn" data-act="next">${step===6?(submitting?'送信中…':'この内容で申し込む'):'次へ'}</button></div>`;bind()}
 async function next(){
   if(submitting)return;
   error='';
   if(step<5){if(!values[step])error='回答を選択してください。'}
-  else if(step===5){name=document.querySelector('#person')?.value.trim()||'';phone=document.querySelector('#phone')?.value.replace(/[^0-9]/g,'')||'';if(!name||!/^0\d{9,10}$/.test(phone))error='お名前と正しい電話番号を入力してください。'}
+  else if(step===5){name=document.querySelector('#person')?.value.trim()||'';phone=document.querySelector('#phone')?.value.replace(/[^0-9]/g,'')||'';if(!/^[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}A-Za-z\s\u3000\u30fc\u3005\u3006\u3007]+$/u.test(name))error='お名前は漢字・ひらがな・カタカナ・ローマ字で入力してください（記号・数字不可）。';else if(!/^0\d{9,10}$/.test(phone))error='正しい電話番号を入力してください。'}
   else {consented=!!document.querySelector('#consent')?.checked;
     if(mode==='weekday'&&(!band||!date||!time))error='時間帯・日付・時刻を選択してください。';
     if(mode==='weekday'&&(!availabilityLoaded||takenSlots.has(date+' '+time))&&!error)error='空き枠を再度確認してください。';
     if(!consented&&!error)error='個人情報等の取扱いへの同意が必要です。';
   }
   if(error){view();return;}
-  if(step!==6){if(step===5)track('contact_completed'); step++; if(step===6){band='';date='';time='';availabilityLoaded=false;fetchAvailability();}view();return;}
+  if(step!==6){if(step===5)track('contact_completed'); step++; if(step===5&&!availabilityLoaded&&!availabilityLoading)fetchAvailability(); if(step===6){band='';date='';time='';if(!availabilityLoaded&&!availabilityLoading)fetchAvailability();}view();return;}
   if(!BOOKING_API_URL){error='受付システムに接続できません。';view();return;}
   submitting=true;view();
   requestId=requestId||(crypto.randomUUID?.()||('req-'+Date.now()+'-'+Math.random().toString(36).slice(2)));
