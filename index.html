@@ -25,6 +25,10 @@ const qs=[
 ];
 let step=0,values={},name='',phone='',mode='weekday',date='',time='',band='',error='',finished=false,submitting=false,consented=false;
 let takenSlots=new Set(),availabilityLoading=false,availabilityLoaded=false,requestId='', formStarted=false, eventStepSet=new Set();
+const STORAGE_KEY='salesport_entry_draft_v1';
+function remember(){try{sessionStorage.setItem(STORAGE_KEY,JSON.stringify({step,values,name,phone,mode,date,time,band,consented,requestId,finished,at:Date.now()}));}catch(e){}}
+function recover(){try{const d=JSON.parse(sessionStorage.getItem(STORAGE_KEY)||'null');if(!d||Date.now()-d.at>2*60*60*1000)return;step=Math.max(0,Math.min(6,d.step||0));values=d.values||{};name=d.name||'';phone=d.phone||'';mode=d.mode||'weekday';date=d.date||'';time=d.time||'';band=d.band||'';consented=!!d.consented;requestId=d.requestId||'';finished=!!d.finished;}catch(e){}}
+recover();
 const app=document.getElementById('app');
 const params = new URLSearchParams(location.search);
 const getParam=k=>params.get(k)||'';
@@ -61,9 +65,9 @@ function fetchAvailability(){
   const key='__spSlots'+Date.now()+Math.floor(Math.random()*1e5);
   const script=document.createElement('script');
   const clean=()=>{clearTimeout(timer);delete window[key];script.remove();availabilityLoading=false;};
-  window[key]=response=>{if(response?.ok){takenSlots=new Set(response.taken||[]);availabilityLoaded=true;error='';}else{error='空き枠の取得に失敗しました。';}clean();if(step===6&&mode==='weekday')view();};
-  const timer=setTimeout(()=>{clean();if(step===6){error='空き枠の取得に失敗しました。画面を再読み込みしてください。';view();}},12000);
-  script.onerror=()=>{clean();if(step===6){error='空き枠の取得に失敗しました。画面を再読み込みしてください。';view();}};
+  window[key]=response=>{if(response?.ok){takenSlots=new Set(response.taken||[]);availabilityLoaded=true;error='';}else{error='空き枠の取得に失敗しました（'+String(response?.reason||'サーバー応答エラー')+'）。';}clean();if(step===6&&mode==='weekday')view();};
+  const timer=setTimeout(()=>{clean();if(step===6){error='空き枠の取得に失敗しました（応答なし）。';view();}},12000);
+  script.onerror=()=>{clean();if(step===6){error='空き枠の取得に失敗しました（応答なし）。';view();}};
   script.src=BOOKING_API_URL+'?action=slots&callback='+encodeURIComponent(key)+'&t='+Date.now();
   document.head.appendChild(script);
 }
@@ -94,13 +98,14 @@ function submitBooking(payload){
     form.submit();
   });
 }
+window.addEventListener('pagehide',()=>{if(step===5){name=document.querySelector('#person')?.value||name;phone=document.querySelector('#phone')?.value||phone;}remember();});
 track('lp_view');
-function view(){if(finished){app.innerHTML=`<div class="end"><div class="circle">✓</div><h2>お申し込みを受け付けました</h2><p>${mode==='weekday'?'電話相談の受付が完了しました。':'ご希望を受け付けました。担当者から日時をご案内いたします。'}</p><div class="summary"><b>お名前：</b>${esc(name)}<br><b>電話番号：</b>${esc(phone)}<br><b>電話相談：</b>${mode==='weekday'?`${esc(date)} ${esc(time)}`:'19時以降または土日で相談（日時は別途ご案内）'}</div><p class="disclaimer">ご入力いただいた電話番号へご連絡いたします。</p></div>`;return}
+function view(){remember();if(finished){app.innerHTML=`<div class="end"><div class="circle">✓</div><h2>お申し込みを受け付けました</h2><p>${mode==='weekday'?'電話相談の受付が完了しました。':'ご希望を受け付けました。担当者から日時をご案内いたします。'}</p><div class="summary"><b>お名前：</b>${esc(name)}<br><b>電話番号：</b>${esc(phone)}<br><b>電話相談：</b>${mode==='weekday'?`${esc(date)} ${esc(time)}`:'19時以降または土日で相談（日時は別途ご案内）'}</div><p class="disclaimer">ご入力いただいた電話番号へご連絡いたします。</p></div>`;return}
 const titles=[...qs.map(q=>q.title),'お名前と電話番号を教えてください','電話相談のお日にちを選んでください'];let body='';
 if(step<5){let q=qs[step];body=step===4?`<div class="field"><label for="age">年齢</label><select id="age"><option value="">選択してください</option>${q.options.map(x=>`<option value="${x}" ${values[step]===x?'selected':''}>${x}</option>`).join('')}</select></div>`:`<div class="options">${q.options.map((x,i)=>`<button class="option ${values[step]===x?'selected':''}" data-option="${i}">${esc(x)}<span class="check">${values[step]===x?'✓':'›'}</span></button>`).join('')}</div>`}
 else if(step===5){body=`<div class="field"><label for="person">お名前</label><input id="person" autocomplete="name" placeholder="例：山田 太郎" value="${esc(name)}" /></div><div class="field"><label for="phone">電話番号</label><input id="phone" inputmode="tel" type="tel" autocomplete="tel" placeholder="例：09012345678" value="${esc(phone)}"/><small>担当者から電話相談の日時にお電話します。</small></div>`}
 else {body=`${mode==='weekday'?(availabilityLoaded?calendar():'<div class="muted">空き枠を確認しています…</div>'):''}<div class="choice-mode" style="margin-top:18px"><button type="button" class="choice ${mode==='flex'?'selected':''}" data-mode="flex"><strong>19時以降または土日で相談</strong><small>希望を受け付け、日時は別途ご案内します</small></button>${mode==='flex'?'<button type="button" class="choice" data-mode="weekday"><strong>平日の空き枠から選ぶ</strong></button>':''}</div>${mode==='flex'?'<div class="muted">19時以降または土日の相談は、希望を受け付けた後に日時をご案内します。</div>':''}`}
-app.innerHTML=`<div class="meta"><span>かんたん入力</span><span>STEP ${step+1} / 7</span></div><div class="progressLine"><span style="width:${(step+1)/7*100}%"></span></div><h2 class="question">${titles[step]}</h2><div class="hint">${step<5?'選択するだけで回答できます。':step===5?'ご相談に必要な連絡先を入力してください。':'ご予約のお時間に担当者からお電話いたします。所要時間は10分程度となります。'}</div>${body}${step===6?`<label class="consent"><input type="checkbox" id="consent" ${consented?'checked':''}><span><a href="https://bc2026-dev.github.io/salesport/privacy.html" target="_blank" rel="noopener">個人情報等の取扱い</a>を確認し、電話相談のために情報を送信することに同意します。</span></label>`:''}${error?`<p class="error">${esc(error)}</p>`:''}<div class="actions">${step>0?'<button class="back" data-act="back">戻る</button>':''}<button class="btn" data-act="next">${step===6?(submitting?'送信中…':'この内容で申し込む'):'次へ'}</button></div>`;bind()}
+app.innerHTML=`<div class="meta"><span>かんたん入力</span><span>STEP ${step+1} / 7</span></div><div class="progressLine"><span style="width:${(step+1)/7*100}%"></span></div><h2 class="question">${titles[step]}</h2><div class="hint">${step<5?'選択するだけで回答できます。':step===5?'ご相談に必要な連絡先を入力してください。':'ご予約のお時間に担当者からお電話いたします。所要時間は10分程度となります。'}</div>${body}${step===6?`<label class="consent"><input type="checkbox" id="consent" ${consented?'checked':''}><span><a href="https://bc2026-dev.github.io/salesport/privacy.html" target="_blank" rel="noopener">個人情報等の取扱い</a>を確認し、電話相談のために情報を送信することに同意します。</span></label>`:''}${error?`<p class="error">${esc(error)}</p>${step===6&&mode==='weekday'?'<button class="back" type="button" data-act="retrySlots">空き枠を再取得</button>':''}`:''}<div class="actions">${step>0?'<button class="back" data-act="back">戻る</button>':''}<button class="btn" data-act="next">${step===6?(submitting?'送信中…':'この内容で申し込む'):'次へ'}</button></div>`;bind()}
 async function next(){
   if(submitting)return;
   error='';
@@ -131,8 +136,8 @@ async function next(){
   }
   submitting=false;view();
 }
-function bind(){app.querySelectorAll('[data-option]').forEach(el=>el.addEventListener('click',()=>{values[step]=qs[step].options[Number(el.dataset.option)]; if(!formStarted){formStarted=true;track('form_start')} if(!eventStepSet.has(step)){track('question_answer',{step:step+1});eventStepSet.add(step)} error='';step++;view()}));app.querySelector('#consent')?.addEventListener('change',e=>{consented=e.target.checked});app.querySelector('#age')?.addEventListener('change',e=>{values[4]=e.target.value;if(e.target.value&&!eventStepSet.has(4)){track('question_answer',{step:5});eventStepSet.add(4)}});app.querySelectorAll('[data-mode]').forEach(el=>el.addEventListener('click',()=>{mode=el.dataset.mode;error='';view()}));app.querySelectorAll('[data-band]').forEach(el=>el.addEventListener('click',()=>{band=el.dataset.band;date='';time='';error='';view()}));app.querySelectorAll('[data-date]').forEach(el=>el.addEventListener('click',()=>{date=el.dataset.date;time='';view()}));app.querySelectorAll('[data-time]').forEach(el=>el.addEventListener('click',()=>{time=el.dataset.time;view()}));app.querySelectorAll('[data-act]').forEach(el=>el.addEventListener('click',()=>{let a=el.dataset.act;if(a==='next')next();if(a==='back'){if(step===5){name=document.querySelector('#person')?.value||name;phone=document.querySelector('#phone')?.value||phone}step=Math.max(0,step-1);error='';view()}if(a==='restart'){step=0;values={};name='';phone='';mode='weekday';date='';time='';finished=false;view()}}))}
+function bind(){app.querySelectorAll('[data-option]').forEach(el=>el.addEventListener('click',()=>{values[step]=qs[step].options[Number(el.dataset.option)]; if(!formStarted){formStarted=true;track('form_start')} if(!eventStepSet.has(step)){track('question_answer',{step:step+1});eventStepSet.add(step)} error='';step++;view()}));app.querySelector('#consent')?.addEventListener('change',e=>{consented=e.target.checked});app.querySelector('#age')?.addEventListener('change',e=>{values[4]=e.target.value;if(e.target.value&&!eventStepSet.has(4)){track('question_answer',{step:5});eventStepSet.add(4)}});app.querySelectorAll('[data-mode]').forEach(el=>el.addEventListener('click',()=>{mode=el.dataset.mode;error='';view()}));app.querySelectorAll('[data-band]').forEach(el=>el.addEventListener('click',()=>{band=el.dataset.band;date='';time='';error='';view()}));app.querySelectorAll('[data-date]').forEach(el=>el.addEventListener('click',()=>{date=el.dataset.date;time='';view()}));app.querySelectorAll('[data-time]').forEach(el=>el.addEventListener('click',()=>{time=el.dataset.time;view()}));app.querySelectorAll('[data-act]').forEach(el=>el.addEventListener('click',()=>{let a=el.dataset.act;if(a==='next')next();if(a==='back'){if(step===5){name=document.querySelector('#person')?.value||name;phone=document.querySelector('#phone')?.value||phone}step=Math.max(0,step-1);error='';view()}if(a==='retrySlots'){error='';availabilityLoaded=false;fetchAvailability();view();}if(a==='restart'){step=0;values={};name='';phone='';mode='weekday';date='';time='';finished=false;view()}}))}
 // delegate week navigation separately to avoid primary "next" button collision
-view();
+view();if(step===6&&!finished&&mode==='weekday')fetchAvailability();
 })();
 </script></body></html>
